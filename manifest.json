@@ -1,7 +1,7 @@
 {
   "name": "Vida Apertada",
   "short_name": "Vida Apertada",
-  "description": "Gestão financeira mensal pessoal",
+  "description": "Gestao financeira mensal pessoal",
   "start_url": "https://dvnofrnc.github.io/vida-apertada/",
   "scope": "https://dvnofrnc.github.io/vida-apertada/",
   "id": "https://dvnofrnc.github.io/vida-apertada/",
@@ -11,7 +11,73 @@
   "orientation": "portrait-primary",
   "lang": "pt-BR",
   "icons": [
-    { "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-72.png",  "sizes": "72x72",   "type": "image/png", "purpose": "any maskable" },
-    { "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-96.png",  "sizes": "96x96",   "type": "image/png", "purpose": "any maskable" },
-    { "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-128.png", "sizes": "128x128", "type": "image/png", "purpose": "any maskable" },
-    { "src": "https://dvnofrnc.
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard"
+    },
+    {
+      "src": "https://dvnofrnc.github.io/vida-apertada/icons/screenshot-narrow.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile"
+    }
+  ],
+  "categories": [
+    "finance",
+    "productivity"
+  ]
+}
