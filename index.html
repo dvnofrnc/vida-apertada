@@ -939,40 +939,62 @@
 // ─── DATA LAYER ─────────────────────────────────────────────────────────────
 
 const STORAGE_KEY = 'vida_apertada_data';
+const SERVER_URL = 'https://vida-apertada-server.onrender.com';
 
-// ─── PERSISTENT STORAGE (window.storage = Claude artifact API, localStorage = fallback) ───
+// ─── PERSISTENT STORAGE ─────────────────────────────────────────────────────
+// Primary: Render server (persists across devices and browser clears)
+// Fallback: localStorage (offline / cache)
+
 async function loadData() {
-  // Try Claude artifact persistent storage first
-  if (window.storage) {
-    try {
-      const result = await window.storage.get(STORAGE_KEY);
-      if (result && result.value) {
-        const parsed = JSON.parse(result.value);
-        // Merge with defaults to ensure new fields exist
-        return mergeWithDefaults(parsed);
+  // 1. Try server first
+  try {
+    const res = await fetch(SERVER_URL + '/data', { signal: AbortSignal.timeout(8000) });
+    if (res.ok) {
+      const json = await res.json();
+      if (json.ok && json.data) {
+        const parsed = mergeWithDefaults(json.data);
+        // Sync to localStorage as offline cache
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed)); } catch(e) {}
+        return parsed;
       }
-    } catch(e) {}
+    }
+  } catch(e) {
+    console.warn('Servidor indisponível, usando cache local:', e.message);
   }
-  // Fallback: localStorage (for use outside Claude.ai)
+
+  // 2. Fallback: localStorage cache
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return mergeWithDefaults(JSON.parse(raw));
   } catch(e) {}
+
+  // 3. Defaults
   return getDefaultData();
 }
 
 async function saveData() {
-  const json = JSON.stringify(db);
-  // Save to both storages for maximum compatibility
-  if (window.storage) {
-    try { await window.storage.set(STORAGE_KEY, json); } catch(e) {}
+  const data = JSON.parse(JSON.stringify(db)); // deep clone
+  // Remove pendingCartaoGastos before saving (temp state)
+  delete data.pendingCartaoGastos;
+
+  // 1. Save to server
+  try {
+    await fetch(SERVER_URL + '/data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      signal: AbortSignal.timeout(8000)
+    });
+  } catch(e) {
+    console.warn('Falha ao salvar no servidor:', e.message);
   }
-  try { localStorage.setItem(STORAGE_KEY, json); } catch(e) {}
+
+  // 2. Always save to localStorage as backup
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
 }
 
 function mergeWithDefaults(saved) {
   const defaults = getDefaultData();
-  // Ensure all default months exist (but don't overwrite saved data)
   Object.keys(defaults.months).forEach(m => {
     if (!saved.months[m]) saved.months[m] = defaults.months[m];
   });
